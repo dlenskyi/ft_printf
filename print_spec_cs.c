@@ -54,6 +54,24 @@ void	print_c(t_gen *g, char c, char var)
 	g->i += 1;
 }
 
+void	if_null_s(t_gen *g, int len)
+{
+	if (g->flg.minus)
+	{
+		g->back += write(1, "(null)", (size_t)len);
+		while (g->flg.width-- > len)
+			g->back += (g->flg.zero == 1 ?
+						write(1, "0", 1) : write(1, " ", 1));
+	}
+	else
+	{
+		while (g->flg.width-- > len)
+			g->back += (g->flg.zero == 1 ?
+						write(1, "0", 1) : write(1, " ", 1));
+		g->back += write(1, "(null)", (size_t)len);
+	}
+}
+
 void	print_null_cs(t_gen *g, char c)
 {
 	int	len;
@@ -74,12 +92,7 @@ void	print_null_cs(t_gen *g, char c)
 		g->back += write(1, "\0", 1);
 	}
 	else if (c == 's' || c == 'S')
-	{
-		while (g->flg.width-- > len)
-			g->back += (g->flg.zero == 1 ?
-			write(1, "0", 1) : write(1, " ", 1));
-		g->back += write(1, "(null)", (size_t)len);
-	}
+		if_null_s(g, len);
 	g->i += 1;
 }
 

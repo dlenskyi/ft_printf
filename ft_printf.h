@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <limits.h>
-# include <stdio.h>
 
 # define FLAGS " .#0-+*Ljthlz123456789"
 # define BASE "BOXbox"
@@ -137,6 +136,7 @@ void			print_udi(t_gen *g);
 */
 
 void			print_width_cs(t_gen *g, char c);
+void			if_null_s(t_gen *g, int len);
 void			print_null_cs(t_gen *g, char c);
 void			print_c(t_gen *g, char c, char var);
 void			print_s(t_gen *g, char c);

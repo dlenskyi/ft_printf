@@ -6,7 +6,7 @@
 /*   By: dlenskyi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 15:16:48 by dlenskyi          #+#    #+#             */
-/*   Updated: 2018/12/06 15:16:49 by dlenskyi         ###   ########.fr       */
+/*   Updated: 2018/12/11 18:15:41 by dlenskyi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ inline void			manage_u(t_gen *g, char var)
 	buf = va_arg(g->ap, long);
 	if (buf == LLONG_MIN)
 		g->result = ft_strdup("-9223372036854775808");
-	else if (g->mod == arg_ll || g->mod == arg_l || g->mod == arg_z ||
-		g->mod == arg_j || g->mod == arg_t || var == 'D' || var == 'U' ||
+	else if (g->mod == arg_z || g->mod == arg_t)
+		g->result = ft_ltoa_u((size_t)buf);
+	else if (g->mod == arg_j)
+		g->result = ft_ltoa_u((uintmax_t)buf);
+	else if (g->mod == arg_ll || g->mod == arg_l || var == 'D' || var == 'U' ||
 		g->mod == arg_L)
 		g->result = ft_ltoa_u((unsigned long)buf);
 	else if (g->mod == arg_h)
