@@ -56,7 +56,7 @@ void	print_c(t_gen *g, char c, char var)
 
 void	print_null_cs(t_gen *g, char c)
 {
-	size_t	len;
+	int	len;
 
 	if (g->flg.prec < 0)
 		len = 6;
@@ -75,10 +75,10 @@ void	print_null_cs(t_gen *g, char c)
 	}
 	else if (c == 's' || c == 'S')
 	{
-		while (g->flg.width-- > (int)len)
+		while (g->flg.width-- > len)
 			g->back += (g->flg.zero == 1 ?
 			write(1, "0", 1) : write(1, " ", 1));
-		g->back += write(1, "(null)", len);
+		g->back += write(1, "(null)", (size_t)len);
 	}
 	g->i += 1;
 }
@@ -89,8 +89,8 @@ void	print_s(t_gen *g, char c)
 
 	if (g->flg.prec >= 0 && g->flg.prec < (int)ft_strlen(g->result))
 	{
-		buf = ft_strsub(g->result, 0, g->flg.prec);
-		ft_strdel(&g->result);
+		buf = ft_strsub(g->result, 0, (size_t)g->flg.prec);
+		free(g->result);
 		g->result = buf;
 	}
 	if (!g->flg.minus)

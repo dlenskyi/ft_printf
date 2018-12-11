@@ -17,21 +17,26 @@ inline void			manage_di(t_gen *g)
 	long	buf;
 	long	nb;
 
-	buf = va_arg(g->ap, long);
-	nb = (long long)buf;
-	if (g->flg.minus || g->flg.prec >= 0)
-		g->flg.zero = 0;
-	if (buf == LLONG_MIN || buf == LONG_MIN)
-		g->result = ft_strdup("-9223372036854775808");
-	else if (g->mod == arg_hh)
-		g->result = ft_itoa((char)nb);
-	else if (g->mod == arg_h)
-		g->result = ft_itoa((short)nb);
-	else if (g->mod == arg_reset)
+	if (g->mod == arg_L)
+	{
+		buf = va_arg(g->ap, int);
+		nb = buf;
 		g->result = ft_itoa((int)nb);
-	else if (g->mod == arg_l || g->mod == arg_t ||
+	}
+	else
+	{
+		buf = va_arg(g->ap, long);
+		nb = (long long)buf;
+		if (g->mod == arg_hh)
+			g->result = ft_itoa((char)nb);
+		else if (g->mod == arg_h)
+			g->result = ft_itoa((short)nb);
+		else if (g->mod == arg_reset)
+			g->result = ft_itoa((int)nb);
+		else if (g->mod == arg_l || g->mod == arg_t ||
 			g->mod == arg_ll || g->mod == arg_j)
-		g->result = ft_ltoa((long)nb);
+			g->result = ft_ltoa(nb);
+	}
 	print_udi(g);
 }
 
@@ -42,10 +47,11 @@ inline void			manage_u(t_gen *g, char var)
 	g->flg.space = 0;
 	g->flg.plus = 0;
 	buf = va_arg(g->ap, long);
-	if (buf == LLONG_MIN || buf == LONG_MIN)
+	if (buf == LLONG_MIN)
 		g->result = ft_strdup("-9223372036854775808");
 	else if (g->mod == arg_ll || g->mod == arg_l || g->mod == arg_z ||
-		g->mod == arg_j || g->mod == arg_t || var == 'D' || var == 'U')
+		g->mod == arg_j || g->mod == arg_t || var == 'D' || var == 'U' ||
+		g->mod == arg_L)
 		g->result = ft_ltoa_u((unsigned long)buf);
 	else if (g->mod == arg_h)
 		g->result = ft_ltoa_u((unsigned short)buf);

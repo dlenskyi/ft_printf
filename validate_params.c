@@ -82,7 +82,7 @@ void	validate_flgs(const char *s, t_gen *g)
 		s[g->i] == '*' ? validate_width(g) : 0;
 		if (s[g->i] == '.')
 			validate_precision(s, g);
-		else if (s[g->i] >= '1' && s[g->i] <= '9' && g->flg.prec == -1)
+		else if (s[g->i] >= '1' && s[g->i] <= '9' && g->flg.prec <= 0)
 		{
 			g->flg.width = ft_atoi(s + g->i);
 			while (s[g->i] >= '0' && s[g->i] <= '9')
@@ -93,4 +93,12 @@ void	validate_flgs(const char *s, t_gen *g)
 		else
 			g->i += 1;
 	}
+}
+
+void	check_params(t_gen *g)
+{
+	if (g->flg.plus)
+		g->flg.space = 0;
+	if (g->flg.minus)
+		g->flg.zero = 0;
 }

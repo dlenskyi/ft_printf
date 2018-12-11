@@ -6,7 +6,7 @@
 /*   By: dlenskyi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 12:24:46 by dlenskyi          #+#    #+#             */
-/*   Updated: 2018/11/28 12:24:47 by dlenskyi         ###   ########.fr       */
+/*   Updated: 2018/12/10 19:02:44 by dlenskyi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ char			*ft_strnew(size_t size);
 char			*ft_strsub(char const *s, unsigned int start, size_t len);
 void			ft_strdel(char **as);
 void			*ft_memalloc(size_t size);
+char			*ft_ftoa(double n);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
 /*
 **				ft_printf main func
@@ -88,6 +90,16 @@ void			set_flgs(t_flg *flg);
 void			parse_str(const char *s, t_gen *g);
 
 /*
+**				setting_color
+*/
+
+void			check_if_color(const char *s, t_gen *g);
+void			set_effect(const char *s, t_gen *g);
+void			set_basic_color(const char *s, t_gen *g);
+void			set_light_color(const char *s, t_gen *g);
+void			set_background_color(const char *s, t_gen *g);
+
+/*
 **				validate_params
 */
 
@@ -95,6 +107,7 @@ void			validate_mods(const char *s, t_gen *g);
 void			validate_flgs(const char *s, t_gen *g);
 void			validate_width(t_gen *g);
 void			validate_precision(const char *s, t_gen *g);
+void			check_params(t_gen *g);
 
 /*
 **				managing specificators
@@ -162,5 +175,20 @@ char			*get_precision_f(char *precision, int prec, long double *nb,
 void			if_precision_f(t_gen *g, long double nb);
 void			check_prec_f(t_gen *g, char *buf, char *precision);
 void			print_float(t_gen *g, long double nb);
+
+/*
+**				       EFFECT				 COLORS
+**				{OFF}		 OFF EFFECT	 BLK		BLACK
+**				{SET:BO}	 BOLD		 RED		RED
+**				{SET:FT}	 FAINT		 GRN		GREEN
+**				{SET:IT}	 ITALIC	 	 YEL		YELLOW
+**				{SET:UL}	 UNDERLINE	 BLU		BLUE
+**				{SET:RE}	 REVERSE	 MGT		MAGENTA
+**				{SET:BL}	 BLINK	 	 CYN		CYAN
+**										 WHT		WHITE
+**
+**				{BGC:***}	BACKGROUND COLOR
+**				{LT:***}	LIGHT COLOR
+*/
 
 #endif

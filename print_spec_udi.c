@@ -43,10 +43,10 @@ void	if_sign_udi(t_gen *g)
 {
 	char	*buf;
 
-	if (g->result[0] == '-')
+	if (g->result[0] == '-' && g->result)
 	{
 		buf = ft_strdup(g->result + 1);
-		ft_strdel(&g->result);
+		free(g->result);
 		g->result = buf;
 		g->flg.negative = 1;
 		g->flg.space = 0;
@@ -67,15 +67,15 @@ void	print_sign_udi(t_gen *g)
 void	if_precision_udi(t_gen *g)
 {
 	char	*buf;
-	size_t	length;
+	int		length;
 	int		i;
 	char	*res;
 
 	if_sign_udi(g);
-	length = ft_strlen(g->result);
+	length = (int)ft_strlen(g->result);
 	if (g->flg.prec == 0 && g->result[0] == '0')
 		g->result[0] = '\0';
-	else if (g->flg.prec > (int)length)
+	else if (g->flg.prec > length)
 	{
 		i = g->flg.prec - length;
 		buf = ft_strnew(i);

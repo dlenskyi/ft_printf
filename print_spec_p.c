@@ -36,9 +36,9 @@ void	if_precision_p(t_gen *g)
 		while (++i < g->flg.prec - len)
 			buf[i] = '0';
 		tmp = ft_strjoin(buf, g->result);
-		ft_strdel(&g->result);
+		free(g->result);
 		g->result = tmp;
-		ft_strdel(&buf);
+		free(buf);
 	}
 	buf = ft_strjoin("0x", g->result);
 	ft_strdel(&g->result);

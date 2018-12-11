@@ -6,7 +6,7 @@
 /*   By: dlenskyi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/28 18:56:45 by dlenskyi          #+#    #+#             */
-/*   Updated: 2018/12/10 19:50:50 by dlenskyi         ###   ########.fr       */
+/*   Updated: 2018/12/10 18:55:17 by dlenskyi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	ft_strdel(char **as)
 {
-	if (!as)
-		return ;
-	if (*as != NULL)
+	if (as && *as)
 	{
 		free(*as);
 		*as = NULL;

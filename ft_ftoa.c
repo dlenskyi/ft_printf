@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_ftoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlenskyi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/28 21:21:39 by dlenskyi          #+#    #+#             */
-/*   Updated: 2018/10/28 21:21:40 by dlenskyi         ###   ########.fr       */
+/*   Created: 2018/12/11 11:13:22 by dlenskyi          #+#    #+#             */
+/*   Updated: 2018/12/11 11:13:41 by dlenskyi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_ftoa(double n)
 {
-	char	*r;
-	int		i;
-	int		j;
+	uint64_t	*data;
 
-	if (!s1 || !s2)
-		return (NULL);
-	i = -1;
-	j = -1;
-	while (s1[++i])
-		;
-	while (s2[++j])
-		;
-	if (!(r = (char *)ft_memalloc(sizeof(char) * (i + j + 1))))
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		r[i] = s1[i];
-	j = -1;
-	while (s2[++j])
-		r[i++] = s2[j];
-	r[i] = '\0';
-	return (r);
+	data = (uint64_t *)&n;
+	if (*data >> 63 & 1)
+		return (ft_strdup("-0"));
+	if (!n)
+		return (ft_strdup("0"));
+	if (n == LONG_MIN)
+		return (ft_strdup("-9223372036854775808"));
+	return (NULL);
 }

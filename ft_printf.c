@@ -19,6 +19,7 @@ void	run_project(const char *s, t_gen *g)
 	validate_flgs(s, g);
 	if (!s[g->i])
 		return ;
+	check_params(g);
 	parse_str(s, g);
 }
 
@@ -40,7 +41,11 @@ void	parse_str(const char *s, t_gen *g)
 		manage_percent(g);
 	else if ((s[g->i] == 'd' || s[g->i] == 'i') &&
 			g->mod != arg_z)
+	{
+		if (g->flg.prec >= 0)
+			g->flg.zero = 0;
 		manage_di(g);
+	}
 	else if ((s[g->i] == 'c' || s[g->i] == 's' || s[g->i] == 'S' ||
 			s[g->i] == 'C') && g->mod != arg_l)
 		manage_cs(g, s[g->i]);
@@ -67,7 +72,9 @@ int		ft_printf(const char *format, ...)
 	va_start(g.ap, format);
 	while (format[g.i])
 	{
-		if (format[g.i] == '%' && !format[g.i + 1])
+		if (format[g.i] == '{')
+			check_if_color(format, &g);
+		else if (format[g.i] == '%' && !format[g.i + 1])
 			return (g.back);
 		else if (format[g.i] == '%' && format[g.i + 1] != '%')
 		{

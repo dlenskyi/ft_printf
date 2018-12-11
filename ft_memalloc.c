@@ -6,7 +6,7 @@
 /*   By: dlenskyi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/28 17:00:29 by dlenskyi          #+#    #+#             */
-/*   Updated: 2018/12/10 19:50:37 by dlenskyi         ###   ########.fr       */
+/*   Updated: 2018/12/10 19:02:00 by dlenskyi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*ft_memalloc(size_t size)
 	size_t	i;
 
 	i = 0;
-	ptr = malloc(size);
-	if (!ptr)
+	ptr = NULL;
+	if (!(ptr = malloc(size)))
 		return (NULL);
 	while (i < size)
 	{

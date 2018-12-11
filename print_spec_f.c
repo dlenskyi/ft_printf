@@ -60,7 +60,7 @@ char	*get_precision_f(char *precision, int prec, long double *nb, char *str)
 			*str = (int)*nb + '0';
 			tmp = precision;
 			precision = ft_strjoin(tmp, str);
-			ft_strdel(&tmp);
+			free(tmp);
 			*nb -= (int)*nb;
 		}
 	}
@@ -71,25 +71,27 @@ char	*get_precision_f(char *precision, int prec, long double *nb, char *str)
 
 void	if_precision_f(t_gen *g, long double nb)
 {
-	char	*buf;
-	char	*precision;
-	long	tmp;
-	char	*str;
+	char			*buf;
+	char			*precision;
+	long double		tmp;
+	char			*str;
 
 	precision = ft_strnew(1);
 	str = ft_strnew(1);
-	g->flg.prec -= nb == 0 ? 1 : 0;
-	tmp = (long)nb;
+	if (!nb)
+		tmp = (double)nb;
+	tmp = nb;
 	nb = nb < 0 ? -nb : nb;
 	nb -= (long)nb;
 	precision = get_precision_f(precision, (g->flg.prec >= 0 ?
 				g->flg.prec : 6), &nb, str);
-	tmp += (nb > 1 && nb <= 2) ? 1 : 0;
-	buf = ft_ltoa(tmp);
-	if (g->flg.prec <= 0 && g->flg.hash)
+	if (nb > 1 && nb < 2)
+		tmp += 1;
+	buf = (!tmp) ? ft_ftoa(tmp) : ft_ltoa(tmp);
+	if (g->flg.prec == 0 && g->flg.hash)
 	{
 		g->result = ft_strjoin(buf, ".");
-		ft_strdel(&buf);
+		free(buf);
 	}
 	else
 		check_prec_f(g, buf, precision);
@@ -129,7 +131,7 @@ void	print_float(t_gen *g, long double nb)
 	else
 	{
 		print_width_f(g);
-		if (nb > 0 && (g->flg.plus || g->flg.space))
+		if (nb >= 0 && (g->flg.plus || g->flg.space))
 			g->back += (g->flg.plus == 1 ?
 			write(1, "+", 1) : write(1, " ", 1));
 		g->back += write(1, g->result, ft_strlen(g->result));
